@@ -4,7 +4,7 @@
 
 Run `npm install`
 Make a database called `tgives`
-All of the files and folders neccessary for completing the homework have been created for you
+All of the files and folders necessary for completing the homework have been created for you
 
 #### Models
 
@@ -17,7 +17,7 @@ A dish has name and description.
 A person may be responsible for a dish.
 
 ~Be sure to create a seed file if you want to interact with your API outside of the tests,
-as the tests will wipe the database everytime you run them.
+as the tests will wipe the database every time you run them.
 
 #### Routes/Tests
 
