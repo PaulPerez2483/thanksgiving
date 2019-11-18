@@ -20,8 +20,8 @@ describe('/api/people routes', () => {
   const person2 = { name: 'russell', isAttending: false };
   const person3 = { name: 'ryan', isAttending: true };
 
-  const dish1 = { name: 'turkey', description: 'delicious briney turkey' };
-  const dish2 = { name: 'pie', description: 'delicious pumpkiney pie' };
+  const dish1 = { name: 'turkey', description: 'delicious briny turkey' };
+  const dish2 = { name: 'pie', description: 'delicious pumpkin pie' };
   describe('GET to /api/people', () => {
     // example test using vanilla promise syntax (no async/await)
     it('should retrieve all people if no params are given', () => {
@@ -121,16 +121,16 @@ describe('/api/people routes', () => {
       // HINT: You will be sending data then checking response. No pre-seeding required
       // Make sure you test both the API response and whats inside the database anytime you create, update, or delete from the database
     });
-    it('should return status code 400 if missing required information', async () => {});
+    it('should return status code 400 if missing required information', async () => { });
   });
 
   xdescribe('PUT to /api/people/:id', () => {
-    it('should update a persons information', async () => {});
-    it('should return a 400 if given an invalid id', async () => {});
+    it('should update a persons information', async () => { });
+    it('should return a 400 if given an invalid id', async () => { });
   });
 
   xdescribe('DELETE to /api/people/:id', () => {
-    it('should remove a person from the database', async () => {});
-    it('should return a 400 if given an invalid id', async () => {});
+    it('should remove a person from the database', async () => { });
+    it('should return a 400 if given an invalid id', async () => { });
   });
 });

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.0.1/react-router-dom.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,500i,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Homework</title>
+    <style>
+        body {
+            font-family: 'Muli', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #d3d3d3
+        }
+
+        h1 {
+            text-align: center
+        }
+
+        .img_size {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+
+        ul {
+            list-style-type: none;
+            background-color: white;
+            margin: 0 10px 10px 0;
+            padding: 10px;
+            width: 340px;
+            height: 200px;
+
+        }
+
+        .holder {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        li {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: start;
+        }
+
+        li>div:last-child {
+            flex-grow: 2;
+        }
+
+        .playerInfo {
+            margin-left: 15px;
+            margin-top: 22px;
+        }
+
+        .fa {
+            font-size: 24px
+        }
+
+        .fa-calendar-check-o {
+            color: green
+        }
+
+        .fa-calendar-times-o {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+    const tools = {
+        Component : React.Component,
+        render : ReactDOM.render,
+        root : document.getElementById('root'),
+        img : {
+             scottie :`https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Lipofsky_Pippen.jpg/275px-Lipofsky_Pippen.jpg`,
+             steve:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKX6-VDSpun_rLZAAt024GnB2TE643uWwSajWEREUdLMyzoLnF&s',
+             dennis:'https://urbanbellemag.files.wordpress.com/2011/10/aa.jpg',
+             toni:'https://i.pinimg.com/originals/01/a3/22/01a32240a4b2774fab35e16cf420d0b6.jpg',
+             horace:'https://cdn-s3.si.com/s3fs-public/2014/06/grant.jpg',
+             isiah:'https://nbcprobasketballtalk.files.wordpress.com/2012/06/nba_g_thomas11_576.jpeg?w=576&h=324&crop=1'
+        }
+        
+    }
+
+    const {Component, render, root, img } = tools;
+    console.log(img)
+
+    class App extends Component {
+        state = {
+            people : [],
+            dishes :[]
+        }
+        async componentDidMount(){
+           const list =  await Promise.all([
+               axios.get('/api/people'),
+               axios.get('/api/dishes'),
+            ]);
+            this.setState({
+                people : list[0].data,
+                dishes: list[1].data
+            })
+        }
+        render(){
+            const {people, dishes} =  this.state;
+            console.log(people, dishes)
+            return(
+                <section>
+                    <h1>Michael Jordan's thanksgiving list</h1>
+                    <div className='holder'>
+                        {people.map(player => <ul key={player.id}> 
+                            <li key={player.id}>
+                                    <div> 
+                                        <img className='img_size' src={
+                                        img[player.name.toLowerCase().slice(0, player.name.indexOf(' '))]  
+                                        }/>
+                                    </div>                            
+                                <div className="playerInfo">
+                                    <div>{player.name}</div>
+                                    <div>{player.attendee ? <i className="fa fa-calendar-check-o" aria-hidden="true"></i> :<i className="fa fa-calendar-times-o" aria-hidden="true"></i>}</div> 
+                                </div>
+                                <div className='lst'>
+                                   { player.attendee ? <div><p>{player.dish['name'] }</p><p>{player.dish['description'] }</p></div> : <div><p>{player.name} did not respond to the invite.</p></div>}
+                                </div>
+                            </li> 
+                            </ul>)}    
+                        </div>
+                </section>
+            )
+        }
+    }
+    render(<App/>, root);
+    </script>
+</body>
+
+</html>
