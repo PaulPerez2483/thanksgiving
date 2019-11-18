@@ -77,6 +77,16 @@
         .fa-calendar-times-o {
             color: red
         }
+
+        .btn {
+            cursor: pointer;
+            text-decoration: underline;
+            width: 220px;
+        }
+
+        .hide {
+            display: none;
+        }
     </style>
 </head>
 
@@ -100,12 +110,15 @@
     }
 
     const {Component, render, root, img } = tools;
+    const {HashRouter, Switch, Link, Route, Redirect} = ReactRouterDOM;
+    console.log()
     console.log(img)
 
     class App extends Component {
         state = {
             people : [],
-            dishes :[]
+            dishes :[],
+            show: false
         }
         async componentDidMount(){
            const list =  await Promise.all([
@@ -117,9 +130,15 @@
                 dishes: list[1].data
             })
         }
+
+        getDish = (props) => {
+            console.log('clicked me');
+            this.setState({show : !this.state.show})
+        }
         render(){
-            const {people, dishes} =  this.state;
+            const {people, dishes, show} =  this.state;
             console.log(people, dishes)
+            console.log(show)
             return(
                 <section>
                     <h1>Michael Jordan's thanksgiving list</h1>
@@ -136,7 +155,7 @@
                                     <div>{player.attendee ? <i className="fa fa-calendar-check-o" aria-hidden="true"></i> :<i className="fa fa-calendar-times-o" aria-hidden="true"></i>}</div> 
                                 </div>
                                 <div className='lst'>
-                                   { player.attendee ? <div><p>{player.dish['name'] }</p><p>{player.dish['description'] }</p></div> : <div><p>{player.name} did not respond to the invite.</p></div>}
+                                   { player.attendee ? <div><p className='btn' onClick={this.getDish.bind(this)}>{player.dish['name'] }</p><p className={ show ? '' : ' hide' }>{player.dish['description'] }</p></div> : <div><p>{player.name} did not respond to the invite.</p></div>}
                                 </div>
                             </li> 
                             </ul>)}    
