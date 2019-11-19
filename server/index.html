@@ -114,6 +114,8 @@
     console.log()
     console.log(img)
 
+    
+
     class App extends Component {
         state = {
             people : [],
@@ -132,7 +134,7 @@
         }
 
         getDish = (props) => {
-            console.log('clicked me');
+            console.log(props.target);
             this.setState({show : !this.state.show})
         }
         render(){
